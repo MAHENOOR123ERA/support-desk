@@ -33,12 +33,29 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Internal server error' });
 });
 
-const PORT = process.env.PORT || 5000;
-const httpServer = http.createServer(app);
-initSocket(httpServer);
+// const PORT = process.env.PORT || 5000;
+// const httpServer = http.createServer(app);
+// initSocket(httpServer);
 
-connectDB().then(() => {
-  httpServer.listen(PORT, () => {
-    console.log(`[server] listening on http://localhost:${PORT}`);
+// connectDB().then(() => {
+//   httpServer.listen(PORT, () => {
+//     console.log(`[server] listening on http://localhost:${PORT}`);
+//   });
+// });
+
+
+
+const PORT = process.env.PORT || 5000;
+
+if (process.env.NODE_ENV !== 'production') {
+  const httpServer = http.createServer(app);
+  initSocket(httpServer);
+
+  connectDB().then(() => {
+    httpServer.listen(PORT, () => {
+      console.log(`[server] listening on http://localhost:${PORT}`);
+    });
   });
-});
+}
+
+module.exports = app;
