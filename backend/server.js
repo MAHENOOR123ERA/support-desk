@@ -18,6 +18,13 @@ app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173', cre
 app.use(express.json({ limit: '1mb' }));
 app.use(morgan('dev'));
 
+ app.get('/', (req, res) => {
+  res.json({
+    message: 'Support Desk Backend is running',
+    status: 'OK'
+  });
+});
+
 app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 
 app.use('/api/users', usersRouter);
